@@ -16,9 +16,9 @@ set ERR=0
 
 echo Installing gitflow into "%GIT_HOME%"...
 
-call :ChkGetopt getopt.exe || set ERR=1
-if %ERR%==1 goto :End
-echo getopt.exe... Found
+REM call :ChkGetopt getopt.exe || set ERR=1
+REM if %ERR%==1 goto :End
+REM echo getopt.exe... Found
 
 if not exist "%GIT_HOME%\bin\git-flow" goto :Install
 echo GitFlow is already installed.>&2
@@ -32,6 +32,9 @@ for /F %%i in ("%GIT_HOME%\git-flow*" "%GIT_HOME%\gitflow-*") do if exist "%%~fi
 
 :Install
 echo Copying files...
+xcopy "getopt.exe"            "%GIT_HOME%\bin"                 /Y /R /F
+xcopy "libintl3.dll"            "%GIT_HOME%\bin"                 /Y /R /F
+
 ::goto :EOF
 xcopy "%~dp0\..\git-flow"            "%GIT_HOME%\bin"                 /Y /R /F
 if errorlevel 4 if not errorlevel 5 goto :AccessDenied
